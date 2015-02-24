@@ -7,14 +7,13 @@ angular.module('morseCodeApp')
       gender: 'female'
     };
 
-    $scope.otherUsers = [{name: 'bob', gender: 'male'}, {name: 'Jane', gender: 'female'}];
+    $scope.otherUsers = [];
 
     //get request to populate otherUsers with data from MondoDB
     $http.get('/api/listOfNames').success(function(listOfNames) {
-      if (listOfNames !== undefined)
-        $scope.otherUsers = listOfNames;
+      $scope.otherUsers = listOfNames;
 
-      socket.syncUpdates('ListOfNames', $scope.otherUsers);
+      socket.syncUpdates('listOfNames', $scope.otherUsers);
     });
 
     $scope.awesomeThings = [];
@@ -26,7 +25,11 @@ angular.module('morseCodeApp')
 
     //this submits the name to mondoDB
     $scope.addUserData = function () {
-      console.log($scope.userData);
+      if($scope.userData.name === '') {
+        return;
+      }
+      $http.post('/api/listOfNames', {name: $scope.userData.name, gender: $scope.userData.gender});
+      $scope.userData.name = '';
     };
 
     $scope.convertTo = function (name) {
@@ -47,5 +50,6 @@ angular.module('morseCodeApp')
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('listOfNames')
     });
   });

@@ -9,7 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
-  app.use('/api/listOfNamess', require('./api/listOfNames'));
+  app.use('/api/listOfNames', require('./api/listOfNames'));
   app.use('/api/things', require('./api/thing'));
   
   // All undefined asset or api routes should return a 404

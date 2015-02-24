@@ -9,8 +9,8 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h1>Enter Name:</h1>
-      <input type="text" class="form-control" ng-model="userData.name">
+      <h1>Name:</h1>
+      <input type="text" class="form-control" ng-model="userData.name" placeholder="Enter Name Here">
 
       <div class="radio">
         <label>
@@ -43,7 +43,7 @@
           <th>Name</th>
           <th>Morse Code</th>
         </tr>
-        <tr ng-repeat="user in otherUsers | filter: {gender:  'male'}:true">
+        <tr ng-repeat="user in otherUsers | filter:{ gender: 'male' }:true | orderBy: 'name' :false">
           <td>{{user.name}}</td>
           <td ng-bind="convertTo(user.name)"></td>
         </tr>
