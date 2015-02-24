@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('morseCodeApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, socket, morseCodeConvertor) {
+    $scope.userData = {};
+    $scope.userData.name= '';
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -14,57 +16,9 @@ angular.module('morseCodeApp')
       console.log($scope.userData);
     };
 
-    //this converts the name to morse code
-    $scope.morseCodeConvertor = function (name) {
-      var morseCode = {
-        a: ".- ",
-        b: "-... ",
-        c: "-.-. ",
-        d: "-.. ",
-        e: ". ",
-        f: "..-. ",
-        g: "--. ",
-        h: ".... ",
-        i: ".. ",
-        j: ".--- ",
-        k: "-.- ",
-        l: ".-.. ",
-        m: "-- ",
-        n: "-. ",
-        o: "--- ",
-        p: ".--. ",
-        q: "--.- ",
-        r: ".-. ",
-        s: "... ",
-        t: "- ",
-        u: "..- ",
-        v: "...- ",
-        w: ".-- ",
-        x: "-..- ",
-        y: "-.-- ",
-        z: "--.. ",
-        0: "----- ",
-        1: ".---- ",
-        2: "..--- ",
-        3: "...-- ",
-        4: "....- ",
-        5: "..... ",
-        6: "-.... ",
-        7: "--... ",
-        8: "---.. ",
-        9: "----. ",
-        " ": "/ "
-      }
-
-
-      return name.replace(/./g, function(letter){
-        for(var code in morseCode){
-          if(code === letter) return morseCode[code];
-          if(code === letter.toLowerCase()) return morseCode[code];
-        };
-        return letter;
-      });
-    }
+    $scope.convertTo = function (name) {
+      return morseCodeConvertor.convertTo(name);
+    };
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
