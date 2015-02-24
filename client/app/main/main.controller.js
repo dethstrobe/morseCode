@@ -55,7 +55,15 @@ angular.module('morseCodeApp')
         9: "----. ",
         " ": "/ "
       }
-      return name;
+
+
+      return name.replace(/./g, function(letter){
+        for(var code in morseCode){
+          if(code === letter) return morseCode[code];
+          if(code === letter.toLowerCase()) return morseCode[code];
+        };
+        return letter;
+      });
     }
 
     $scope.addThing = function() {
