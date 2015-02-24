@@ -31,6 +31,39 @@
       <p ng-bind="convertTo(userData.name)"></p>
 
     </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <h1> Male names </h1>
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>Morse Code</th>
+        </tr>
+        <tr ng-repeat="user in otherUsers | filter: {gender:  'male'}:true">
+          <td>{{user.name}}</td>
+          <td ng-bind="convertTo(user.name)"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h1> Female names </h1>
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>Morse Code</th>
+        </tr>
+        <tr ng-repeat="user in otherUsers | filter: {gender:  'female'}:true">
+          <td>{{user.name}}</td>
+          <td ng-bind="convertTo(user.name)"></td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 
   <form class="thing-form">

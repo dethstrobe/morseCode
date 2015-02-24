@@ -2,8 +2,21 @@
 
 angular.module('morseCodeApp')
   .controller('MainCtrl', function ($scope, $http, socket, morseCodeConvertor) {
-    $scope.userData = {};
-    $scope.userData.name= '';
+    $scope.userData = {
+      name: '',
+      gender: 'female'
+    };
+
+    $scope.otherUsers = [{name: 'bob', gender: 'male'}, {name: 'Jane', gender: 'female'}];
+
+    //get request to populate otherUsers with data from MondoDB
+    $http.get('/api/listOfNames').success(function(listOfNames) {
+      if (listOfNames !== undefined)
+        $scope.otherUsers = listOfNames;
+
+      socket.syncUpdates('ListOfNames', $scope.otherUsers);
+    });
+
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
